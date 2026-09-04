@@ -3,147 +3,4281 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>코드월드 — 프로그래밍 학습 플랫폼</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta name="description" content="웨이브히어링 임직원과 파트너 점주를 위한 실무 중심 교육·브랜드 홍보 플랫폼" />
+  <meta name="theme-color" content="#071a35" />
+
+  <title>웨이브히어링 | 실무 교육 & 브랜드 플랫폼</title>
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2222%22 fill=%22%23071a35%22/><path d=%22M18 54c14-22 25-22 39 0s25 22 35 0%22 fill=%22none%22 stroke=%22%231fb7c9%22 stroke-width=%2210%22 stroke-linecap=%22round%22/><path d=%22M18 40c14-22 25-22 39 0s25 22 35 0%22 fill=%22none%22 stroke=%22%231f5ed6%22 stroke-width=%2210%22 stroke-linecap=%22round%22/></svg>" />
+
+  <style>
+    :root{
+      --navy:#071a35;
+      --navy-2:#0b274c;
+      --blue:#1458d4;
+      --blue-2:#1d6ee8;
+      --cyan:#19b7c9;
+      --green:#0d5f4b;
+      --green-2:#158064;
+      --mint:#eaf8f3;
+      --ink:#0e1a2b;
+      --muted:#64748b;
+      --line:#e4eaf2;
+      --paper:#f4f7fb;
+      --white:#fff;
+      --shadow:0 18px 50px rgba(5,26,53,.11);
+      --radius:20px;
+      --side:252px;
+    }
+
+    *{box-sizing:border-box}
+
+    html{
+      scroll-behavior:smooth;
+    }
+
+    body{
+      margin:0;
+      font-family:
+        Inter,
+        Pretendard,
+        "Noto Sans KR",
+        "Apple SD Gothic Neo",
+        "Malgun Gothic",
+        Arial,
+        sans-serif;
+      color:var(--ink);
+      background:var(--paper);
+      -webkit-font-smoothing:antialiased;
+      text-rendering:optimizeLegibility;
+    }
+
+    body.menu-open{
+      overflow:hidden;
+    }
+
+    a{
+      text-decoration:none;
+      color:inherit;
+    }
+
+    button,
+    input,
+    select,
+    textarea{
+      font:inherit;
+    }
+
+    button{
+      cursor:pointer;
+    }
+
+    img{
+      display:block;
+      max-width:100%;
+    }
+
+    .sr-only{
+      position:absolute;
+      width:1px;
+      height:1px;
+      padding:0;
+      margin:-1px;
+      overflow:hidden;
+      clip:rect(0,0,0,0);
+      white-space:nowrap;
+      border:0;
+    }
+
+    .layout{
+      min-height:100vh;
+      display:grid;
+      grid-template-columns:var(--side) minmax(0,1fr);
+    }
+
+    /* =========================
+       SIDEBAR
+    ========================== */
+
+    .side{
+      position:sticky;
+      top:0;
+      height:100vh;
+      z-index:40;
+      background:
+        linear-gradient(
+          180deg,
+          #071a35 0%,
+          #071a35 58%,
+          #082a3b 100%
+        );
+      color:#fff;
+      padding:22px 16px 18px;
+      overflow:auto;
+      border-right:1px solid rgba(255,255,255,.06);
+    }
+
+    .side__brand{
+      min-height:68px;
+      display:flex;
+      align-items:center;
+      padding:8px 8px 18px;
+      border-bottom:1px solid rgba(255,255,255,.12);
+      margin-bottom:16px;
+    }
+
+    .side__brand img{
+      width:198px;
+      height:auto;
+      object-fit:contain;
+    }
+
+    .brand-fallback{
+      display:none;
+      align-items:center;
+      gap:9px;
+      font-weight:900;
+      letter-spacing:.02em;
+      font-size:19px;
+    }
+
+    .brand-fallback .wave-icon{
+      width:34px;
+      height:34px;
+    }
+
+    .side__label{
+      font-size:11px;
+      color:#87a0bf;
+      font-weight:800;
+      letter-spacing:.12em;
+      padding:10px 11px 7px;
+      text-transform:uppercase;
+    }
+
+    .side__nav{
+      display:grid;
+      gap:5px;
+    }
+
+    .side__item{
+      min-height:46px;
+      display:flex;
+      align-items:center;
+      gap:11px;
+      padding:0 12px;
+      border-radius:12px;
+      color:#c8d6e8;
+      font-size:14px;
+      font-weight:700;
+      transition:.2s ease;
+    }
+
+    .side__item svg{
+      width:19px;
+      height:19px;
+      stroke:currentColor;
+      stroke-width:1.7;
+      flex:none;
+    }
+
+    .side__item:hover{
+      background:rgba(255,255,255,.08);
+      color:#fff;
+      transform:translateX(2px);
+    }
+
+    .side__item.is-active{
+      background:linear-gradient(90deg,#134eaa,#116b96);
+      color:#fff;
+      box-shadow:0 10px 25px rgba(0,0,0,.17);
+    }
+
+    .side__divider{
+      height:1px;
+      background:rgba(255,255,255,.1);
+      margin:15px 8px;
+    }
+
+    .side__mini{
+      margin:18px 6px 0;
+      padding:15px;
+      border-radius:16px;
+      background:
+        linear-gradient(
+          145deg,
+          rgba(29,110,232,.28),
+          rgba(21,128,100,.2)
+        );
+      border:1px solid rgba(255,255,255,.12);
+    }
+
+    .side__mini strong{
+      display:block;
+      font-size:14px;
+      line-height:1.5;
+    }
+
+    .side__mini p{
+      margin:7px 0 12px;
+      color:#b9cbe0;
+      font-size:12px;
+      line-height:1.6;
+    }
+
+    .side__mini a{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      color:#7be0d5;
+      font-size:12px;
+      font-weight:800;
+    }
+
+    /* =========================
+       MAIN
+    ========================== */
+
+    .main{
+      min-width:0;
+    }
+
+    .topbar{
+      height:78px;
+      position:sticky;
+      top:0;
+      z-index:30;
+      background:rgba(255,255,255,.92);
+      backdrop-filter:blur(14px);
+      -webkit-backdrop-filter:blur(14px);
+      border-bottom:1px solid var(--line);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:0 28px;
+      gap:18px;
+    }
+
+    .mobile-brand{
+      display:none;
+      align-items:center;
+      gap:9px;
+      font-weight:900;
+      color:var(--navy);
+    }
+
+    .mobile-brand svg{
+      width:33px;
+      height:33px;
+    }
+
+    .menu-btn{
+      display:none;
+      border:0;
+      background:transparent;
+      padding:7px;
+      color:var(--navy);
+    }
+
+    .menu-btn svg{
+      width:25px;
+      height:25px;
+    }
+
+    .search-wrap{
+      position:relative;
+      flex:1;
+      max-width:660px;
+    }
+
+    .search-wrap svg{
+      position:absolute;
+      left:16px;
+      top:50%;
+      transform:translateY(-50%);
+      width:19px;
+      height:19px;
+      stroke:#76859a;
+    }
+
+    .search{
+      width:100%;
+      height:46px;
+      border:1px solid #d9e1ec;
+      border-radius:13px;
+      background:#f8fafc;
+      color:var(--ink);
+      padding:0 44px 0 46px;
+      outline:none;
+      transition:.2s ease;
+    }
+
+    .search:focus{
+      background:#fff;
+      border-color:#88aceb;
+      box-shadow:0 0 0 4px rgba(20,88,212,.09);
+    }
+
+    .search-hint{
+      position:absolute;
+      right:12px;
+      top:50%;
+      transform:translateY(-50%);
+      font-size:11px;
+      color:#8a97a8;
+      border:1px solid #dce3eb;
+      border-radius:7px;
+      padding:3px 7px;
+      background:#fff;
+    }
+
+    .topbar__right{
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+
+    .icon-btn{
+      width:42px;
+      height:42px;
+      border:1px solid var(--line);
+      border-radius:12px;
+      background:#fff;
+      color:var(--navy);
+      display:grid;
+      place-items:center;
+      transition:.2s;
+    }
+
+    .icon-btn:hover{
+      border-color:#b7c9e5;
+      transform:translateY(-1px);
+    }
+
+    .icon-btn svg{
+      width:20px;
+      height:20px;
+      stroke:currentColor;
+    }
+
+    .user{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding-left:5px;
+    }
+
+    .user__avatar{
+      width:38px;
+      height:38px;
+      border-radius:50%;
+      display:grid;
+      place-items:center;
+      background:linear-gradient(135deg,var(--blue),var(--green-2));
+      color:#fff;
+      font-weight:900;
+      font-size:13px;
+      box-shadow:0 5px 14px rgba(13,95,75,.24);
+    }
+
+    .user__meta{
+      line-height:1.25;
+    }
+
+    .user__meta strong{
+      font-size:13px;
+      display:block;
+    }
+
+    .user__meta span{
+      font-size:11px;
+      color:var(--muted);
+    }
+
+    .content{
+      padding:22px 28px 42px;
+      max-width:1650px;
+      margin:0 auto;
+    }
+
+    /* =========================
+       HERO
+    ========================== */
+
+    .hero-grid{
+      display:grid;
+      grid-template-columns:minmax(0,1.75fr) minmax(280px,.58fr);
+      gap:18px;
+      align-items:stretch;
+    }
+
+    .hero{
+      position:relative;
+      min-height:390px;
+      border-radius:24px;
+      overflow:hidden;
+      background:#071a35;
+      box-shadow:var(--shadow);
+      isolation:isolate;
+    }
+
+    .hero::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        linear-gradient(
+          90deg,
+          rgba(4,20,46,.98) 0%,
+          rgba(4,20,46,.90) 38%,
+          rgba(4,20,46,.42) 67%,
+          rgba(4,20,46,.16) 100%
+        ),
+        url("https://www.xn--9y2bn2f98hf9a9tn26e.kr/_files/6ylwJoaus.png")
+        center/cover no-repeat;
+      z-index:-2;
+    }
+
+    .hero::after{
+      content:"";
+      position:absolute;
+      left:0;
+      right:0;
+      bottom:0;
+      height:120px;
+      background:
+        radial-gradient(
+          ellipse at center,
+          rgba(25,183,201,.27),
+          transparent 65%
+        );
+      z-index:-1;
+    }
+
+    .hero__body{
+      height:100%;
+      padding:38px 42px;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      max-width:760px;
+      color:#fff;
+    }
+
+    .eyebrow{
+      display:flex;
+      align-items:center;
+      gap:9px;
+      font-size:13px;
+      font-weight:800;
+      color:#86d8e3;
+      margin-bottom:12px;
+    }
+
+    .eyebrow::before{
+      content:"";
+      width:28px;
+      height:2px;
+      background:#25d0c0;
+      border-radius:99px;
+    }
+
+    .hero h1{
+      margin:0;
+      font-size:clamp(33px,3.15vw,58px);
+      line-height:1.08;
+      letter-spacing:-.045em;
+    }
+
+    .hero h1 .accent{
+      color:#21d0c3;
+    }
+
+    .hero__lead{
+      max-width:650px;
+      margin:17px 0 0;
+      font-size:15px;
+      line-height:1.75;
+      color:#d8e7f7;
+    }
+
+    .hero__actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:24px;
+    }
+
+    .btn{
+      border:0;
+      border-radius:12px;
+      min-height:44px;
+      padding:0 17px;
+      font-weight:800;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      transition:.2s ease;
+    }
+
+    .btn svg{
+      width:18px;
+      height:18px;
+    }
+
+    .btn--primary{
+      background:linear-gradient(135deg,#1b65e8,#0e85a9);
+      color:#fff;
+      box-shadow:0 10px 24px rgba(20,88,212,.28);
+    }
+
+    .btn--primary:hover{
+      transform:translateY(-2px);
+      filter:brightness(1.05);
+    }
+
+    .btn--ghost{
+      background:rgba(255,255,255,.11);
+      color:#fff;
+      border:1px solid rgba(255,255,255,.22);
+    }
+
+    .btn--ghost:hover{
+      background:rgba(255,255,255,.17);
+    }
+
+    .hero__tags{
+      display:flex;
+      gap:7px;
+      flex-wrap:wrap;
+      margin-top:23px;
+    }
+
+    .hero__tag{
+      font-size:11px;
+      font-weight:800;
+      padding:7px 10px;
+      border-radius:99px;
+      background:rgba(255,255,255,.1);
+      border:1px solid rgba(255,255,255,.12);
+      color:#eaf4ff;
+      backdrop-filter:blur(6px);
+    }
+
+    .hero-wave{
+      position:absolute;
+      right:-30px;
+      bottom:-15px;
+      width:56%;
+      min-width:430px;
+      height:190px;
+      opacity:.63;
+      pointer-events:none;
+    }
+
+    /* =========================
+       STATS
+    ========================== */
+
+    .stats-panel{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:24px;
+      padding:22px;
+      box-shadow:0 12px 35px rgba(5,26,53,.07);
+      display:flex;
+      flex-direction:column;
+    }
+
+    .panel-head{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      margin-bottom:15px;
+    }
+
+    .panel-head h3{
+      font-size:16px;
+      margin:0;
+      letter-spacing:-.02em;
+    }
+
+    .panel-head small{
+      color:var(--muted);
+      font-size:11px;
+    }
+
+    .big-stat{
+      padding:17px;
+      border-radius:17px;
+      background:linear-gradient(145deg,#edf4ff,#eefaf6);
+      border:1px solid #dce9f5;
+      margin-bottom:13px;
+    }
+
+    .big-stat span{
+      font-size:12px;
+      color:#5d6c80;
+      font-weight:700;
+    }
+
+    .big-stat strong{
+      display:flex;
+      align-items:baseline;
+      gap:4px;
+      margin-top:5px;
+      color:var(--blue);
+      font-size:38px;
+      letter-spacing:-.04em;
+    }
+
+    .big-stat strong em{
+      font-size:14px;
+      font-style:normal;
+      color:var(--muted);
+    }
+
+    .stat-row{
+      display:grid;
+      grid-template-columns:1fr auto;
+      gap:10px;
+      padding:13px 2px;
+      border-bottom:1px solid #edf0f5;
+      align-items:center;
+    }
+
+    .stat-row:last-of-type{
+      border-bottom:0;
+    }
+
+    .stat-row span{
+      font-size:12px;
+      color:#5e6c7f;
+    }
+
+    .stat-row strong{
+      font-size:17px;
+      color:var(--navy);
+    }
+
+    .stats-note{
+      margin-top:auto;
+      padding-top:12px;
+      font-size:10.5px;
+      line-height:1.55;
+      color:#8794a5;
+    }
+
+    .stats-link{
+      margin-top:14px;
+      height:39px;
+      border-radius:10px;
+      border:1px solid #dbe5f1;
+      background:#f7faff;
+      color:var(--blue);
+      font-size:12px;
+      font-weight:800;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:6px;
+    }
+
+    /* =========================
+       SECTION
+    ========================== */
+
+    .section{
+      margin-top:20px;
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:22px;
+      padding:22px;
+      box-shadow:0 10px 30px rgba(5,26,53,.045);
+    }
+
+    .section-head{
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap:18px;
+      margin-bottom:16px;
+    }
+
+    .section-head__text h2{
+      font-size:20px;
+      margin:0;
+      letter-spacing:-.03em;
+    }
+
+    .section-head__text p{
+      font-size:12px;
+      color:var(--muted);
+      margin:6px 0 0;
+      line-height:1.5;
+    }
+
+    .link{
+      color:var(--blue);
+      font-size:12px;
+      font-weight:800;
+      white-space:nowrap;
+    }
+
+    /* =========================
+       QUICK MENU
+    ========================== */
+
+    .quick-grid{
+      display:grid;
+      grid-template-columns:repeat(8,1fr);
+      gap:10px;
+    }
+
+    .quick{
+      min-height:122px;
+      border:1px solid #e3e9f1;
+      border-radius:16px;
+      background:#fff;
+      padding:14px 10px;
+      text-align:center;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      transition:.22s ease;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .quick::after{
+      content:"";
+      position:absolute;
+      inset:auto 0 0;
+      height:3px;
+      background:linear-gradient(90deg,var(--blue),var(--cyan));
+      transform:scaleX(0);
+      transform-origin:left;
+      transition:.25s;
+    }
+
+    .quick:hover{
+      transform:translateY(-4px);
+      box-shadow:0 13px 25px rgba(7,26,53,.08);
+      border-color:#cdd9e8;
+    }
+
+    .quick:hover::after{
+      transform:scaleX(1);
+    }
+
+    .quick__icon{
+      width:43px;
+      height:43px;
+      border-radius:13px;
+      display:grid;
+      place-items:center;
+      margin-bottom:9px;
+      background:#f0f5fd;
+      color:var(--blue);
+    }
+
+    .quick:nth-child(4n+2) .quick__icon{
+      background:#ebf7f4;
+      color:var(--green);
+    }
+
+    .quick:nth-child(4n+3) .quick__icon{
+      background:#eef6fa;
+      color:#0c7fa4;
+    }
+
+    .quick:nth-child(4n+4) .quick__icon{
+      background:#f2f0ff;
+      color:#5b48c9;
+    }
+
+    .quick__icon svg{
+      width:23px;
+      height:23px;
+      stroke:currentColor;
+      stroke-width:1.7;
+    }
+
+    .quick strong{
+      font-size:12.5px;
+      line-height:1.45;
+    }
+
+    .quick small{
+      font-size:10.5px;
+      color:#8190a2;
+      margin-top:3px;
+    }
+
+    /* =========================
+       COURSES
+    ========================== */
+
+    .course-toolbar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom:16px;
+      flex-wrap:wrap;
+    }
+
+    .tabs{
+      display:flex;
+      align-items:center;
+      gap:6px;
+      background:#f0f4f8;
+      border-radius:12px;
+      padding:4px;
+    }
+
+    .tab{
+      border:0;
+      background:transparent;
+      color:#6a788b;
+      padding:8px 13px;
+      border-radius:9px;
+      font-size:12px;
+      font-weight:800;
+      transition:.2s;
+    }
+
+    .tab.is-active{
+      background:#fff;
+      color:var(--navy);
+      box-shadow:0 3px 10px rgba(7,26,53,.08);
+    }
+
+    .course-count{
+      font-size:11px;
+      color:var(--muted);
+    }
+
+    .courses{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:14px;
+    }
+
+    .course{
+      border:1px solid #e0e7ef;
+      border-radius:18px;
+      background:#fff;
+      overflow:hidden;
+      transition:.22s ease;
+      display:flex;
+      flex-direction:column;
+      min-width:0;
+    }
+
+    .course:hover{
+      transform:translateY(-5px);
+      box-shadow:0 18px 35px rgba(5,26,53,.11);
+      border-color:#cbd8e9;
+    }
+
+    .course__thumb{
+      height:142px;
+      position:relative;
+      overflow:hidden;
+      background:#dde7f4;
+    }
+
+    .course__thumb::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        linear-gradient(
+          180deg,
+          transparent 45%,
+          rgba(3,17,38,.45) 100%
+        );
+    }
+
+    .course__type{
+      position:absolute;
+      left:10px;
+      top:10px;
+      z-index:2;
+      font-size:10px;
+      font-weight:900;
+      padding:6px 8px;
+      border-radius:8px;
+      background:rgba(255,255,255,.92);
+      color:var(--navy);
+      box-shadow:0 5px 12px rgba(0,0,0,.11);
+    }
+
+    .course__play{
+      position:absolute;
+      right:10px;
+      bottom:10px;
+      z-index:2;
+      width:32px;
+      height:32px;
+      border-radius:50%;
+      display:grid;
+      place-items:center;
+      background:#fff;
+      color:var(--blue);
+      box-shadow:0 5px 14px rgba(0,0,0,.15);
+    }
+
+    .course__play svg{
+      width:15px;
+      height:15px;
+      fill:currentColor;
+    }
+
+    .course__body{
+      padding:14px;
+      display:flex;
+      flex-direction:column;
+      flex:1;
+    }
+
+    .badge{
+      align-self:flex-start;
+      font-size:9.5px;
+      font-weight:900;
+      color:var(--blue);
+      background:#eef4ff;
+      border:1px solid #dce8ff;
+      border-radius:6px;
+      padding:4px 6px;
+      margin-bottom:7px;
+    }
+
+    .course h3{
+      font-size:14px;
+      line-height:1.45;
+      margin:0 0 8px;
+      letter-spacing:-.02em;
+      min-height:40px;
+    }
+
+    .course p{
+      font-size:11px;
+      line-height:1.55;
+      color:var(--muted);
+      margin:0 0 10px;
+    }
+
+    .meta{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      color:#718095;
+      font-size:10px;
+      margin-top:auto;
+      padding-top:8px;
+    }
+
+    .meta span{
+      display:flex;
+      align-items:center;
+      gap:4px;
+    }
+
+    .meta svg{
+      width:13px;
+      height:13px;
+      stroke:currentColor;
+      stroke-width:1.7;
+    }
+
+    .course[data-audience="owner"] .badge{
+      color:var(--green);
+      background:#edf8f4;
+      border-color:#d7eee6;
+    }
+
+    .course.hidden{
+      display:none;
+    }
+
+    .photo-a{
+      background:
+        linear-gradient(
+          140deg,
+          rgba(7,26,53,.06),
+          rgba(13,95,75,.08)
+        ),
+        url("https://www.xn--9y2bn2f98hf9a9tn26e.kr/_files/6qEALkzBy.jpg")
+        center/cover no-repeat;
+    }
+
+    .photo-b{
+      background:
+        linear-gradient(
+          140deg,
+          rgba(7,26,53,.08),
+          rgba(20,88,212,.07)
+        ),
+        url("https://www.xn--9y2bn2f98hf9a9tn26e.kr/_files/6ylwJoaus.png")
+        center/cover no-repeat;
+    }
+
+    .photo-c{
+      background:
+        linear-gradient(
+          140deg,
+          rgba(7,26,53,.18),
+          rgba(13,95,75,.22)
+        ),
+        url("https://www.xn--9y2bn2f98hf9a9tn26e.kr/_files/6qEALkwMR.jpg")
+        center/cover no-repeat;
+    }
+
+    .photo-d{
+      background:
+        linear-gradient(
+          140deg,
+          rgba(7,26,53,.10),
+          rgba(20,88,212,.10)
+        ),
+        url("https://www.xn--9y2bn2f98hf9a9tn26e.kr/_files/6qEALkDr9.jpg")
+        center/cover no-repeat;
+    }
+
+    /* =========================
+       ROADMAP
+    ========================== */
+
+    .split{
+      display:grid;
+      grid-template-columns:1.15fr .85fr;
+      gap:18px;
+      margin-top:20px;
+    }
+
+    .roadmap,
+    .news-panel{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:22px;
+      padding:22px;
+      box-shadow:0 10px 30px rgba(5,26,53,.045);
+    }
+
+    .steps{
+      display:grid;
+      grid-template-columns:repeat(6,1fr);
+      gap:0;
+      margin-top:19px;
+      position:relative;
+    }
+
+    .steps::before{
+      content:"";
+      position:absolute;
+      left:8%;
+      right:8%;
+      top:25px;
+      height:2px;
+      background:#d7e2ee;
+      z-index:0;
+    }
+
+    .step{
+      position:relative;
+      z-index:1;
+      text-align:center;
+      padding:0 4px;
+    }
+
+    .step__num{
+      width:51px;
+      height:51px;
+      border-radius:50%;
+      margin:0 auto 10px;
+      display:grid;
+      place-items:center;
+      background:#fff;
+      border:2px solid #bed0e7;
+      color:var(--blue);
+      font-weight:900;
+      font-size:12px;
+      box-shadow:0 0 0 7px #fff;
+    }
+
+    .step:nth-child(4) .step__num,
+    .step:nth-child(5) .step__num,
+    .step:nth-child(6) .step__num{
+      border-color:#b5d9cf;
+      color:var(--green);
+    }
+
+    .step strong{
+      display:block;
+      font-size:11px;
+      line-height:1.45;
+    }
+
+    .step small{
+      display:block;
+      color:#8a97a8;
+      font-size:9.5px;
+      line-height:1.4;
+      margin-top:4px;
+    }
+
+    /* =========================
+       NEWS
+    ========================== */
+
+    .news-list{
+      display:grid;
+      gap:8px;
+    }
+
+    .news{
+      display:grid;
+      grid-template-columns:78px 1fr auto;
+      gap:11px;
+      align-items:center;
+      padding:9px;
+      border:1px solid #e9edf3;
+      border-radius:12px;
+      transition:.2s;
+    }
+
+    .news:hover{
+      border-color:#cdd8e7;
+      background:#fbfdff;
+    }
+
+    .news__thumb{
+      width:78px;
+      height:55px;
+      border-radius:9px;
+      overflow:hidden;
+      background:#e5e9ef;
+    }
+
+    .news__thumb img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+    }
+
+    .news__body b{
+      font-size:11.5px;
+      display:block;
+      line-height:1.4;
+      margin-bottom:3px;
+    }
+
+    .news__body span{
+      font-size:9.5px;
+      color:var(--muted);
+    }
+
+    .news__go{
+      width:28px;
+      height:28px;
+      border-radius:50%;
+      border:1px solid #d5deeb;
+      background:#fff;
+      display:grid;
+      place-items:center;
+      color:var(--blue);
+    }
+
+    .news__go svg{
+      width:13px;
+      height:13px;
+      fill:currentColor;
+    }
+
+    /* =========================
+       BRAND STORY
+    ========================== */
+
+    .brand-story{
+      margin-top:20px;
+      border-radius:24px;
+      overflow:hidden;
+      position:relative;
+      color:#fff;
+      min-height:330px;
+      background:#071a35;
+      box-shadow:var(--shadow);
+    }
+
+    .brand-story::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        linear-gradient(
+          90deg,
+          rgba(7,26,53,.97),
+          rgba(7,26,53,.79) 49%,
+          rgba(7,26,53,.34)
+        ),
+        url("https://www.xn--9y2bn2f98hf9a9tn26e.kr/_files/6qEALkzBy.jpg")
+        center/cover no-repeat;
+    }
+
+    .brand-story__body{
+      position:relative;
+      z-index:1;
+      padding:42px;
+      max-width:730px;
+    }
+
+    .brand-story__brand{
+      width:220px;
+      margin-bottom:18px;
+    }
+
+    .brand-story h2{
+      font-size:31px;
+      line-height:1.25;
+      letter-spacing:-.04em;
+      margin:0 0 13px;
+    }
+
+    .brand-story p{
+      color:#d5e3f1;
+      font-size:13px;
+      line-height:1.8;
+      margin:0 0 20px;
+    }
+
+    .brand-points{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+    }
+
+    .brand-point{
+      font-size:11px;
+      font-weight:800;
+      border:1px solid rgba(255,255,255,.18);
+      background:rgba(255,255,255,.08);
+      padding:8px 10px;
+      border-radius:10px;
+    }
+
+    /* =========================
+       FAQ
+    ========================== */
+
+    .faq-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+    }
+
+    .faq{
+      border:1px solid #e2e8f0;
+      border-radius:13px;
+      overflow:hidden;
+      background:#fff;
+    }
+
+    .faq__q{
+      width:100%;
+      border:0;
+      background:#fff;
+      text-align:left;
+      padding:14px 15px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:15px;
+      font-size:12px;
+      font-weight:800;
+      color:var(--ink);
+    }
+
+    .faq__q svg{
+      width:16px;
+      height:16px;
+      stroke:var(--blue);
+      transition:.2s;
+      flex:none;
+    }
+
+    .faq.is-open .faq__q svg{
+      transform:rotate(180deg);
+    }
+
+    .faq__a{
+      max-height:0;
+      overflow:hidden;
+      transition:max-height .25s ease;
+      padding:0 15px;
+      color:var(--muted);
+      font-size:11px;
+      line-height:1.7;
+    }
+
+    .faq.is-open .faq__a{
+      max-height:150px;
+      padding-bottom:14px;
+    }
+
+    /* =========================
+       CTA
+    ========================== */
+
+    .cta{
+      margin-top:20px;
+      border-radius:23px;
+      padding:28px 30px;
+      background:
+        linear-gradient(
+          110deg,
+          #0a2344 0%,
+          #0e4b70 55%,
+          #0d5f4b 100%
+        );
+      color:#fff;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:20px;
+      overflow:hidden;
+      position:relative;
+    }
+
+    .cta::after{
+      content:"";
+      position:absolute;
+      width:260px;
+      height:260px;
+      border-radius:50%;
+      right:-70px;
+      top:-115px;
+      border:48px solid rgba(255,255,255,.06);
+    }
+
+    .cta__text{
+      position:relative;
+      z-index:1;
+    }
+
+    .cta h2{
+      font-size:22px;
+      margin:0 0 7px;
+      letter-spacing:-.03em;
+    }
+
+    .cta p{
+      margin:0;
+      color:#d8e5f1;
+      font-size:12px;
+      line-height:1.6;
+    }
+
+    .cta__actions{
+      display:flex;
+      gap:8px;
+      position:relative;
+      z-index:1;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    .btn--light{
+      background:#fff;
+      color:var(--navy);
+    }
+
+    .btn--outline{
+      background:transparent;
+      color:#fff;
+      border:1px solid rgba(255,255,255,.32);
+    }
+
+    .footer{
+      padding:25px 2px 8px;
+      color:#7a8798;
+      font-size:10.5px;
+      line-height:1.75;
+      display:flex;
+      justify-content:space-between;
+      gap:20px;
+      align-items:flex-end;
+    }
+
+    .footer b{
+      color:#4a596c;
+    }
+
+    .footer__links{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+
+    /* =========================
+       TOAST / MODAL
+    ========================== */
+
+    .toast{
+      position:fixed;
+      left:50%;
+      bottom:26px;
+      transform:translate(-50%,22px);
+      opacity:0;
+      pointer-events:none;
+      z-index:100;
+      background:#081c35;
+      color:#fff;
+      border:1px solid rgba(255,255,255,.12);
+      padding:12px 16px;
+      border-radius:12px;
+      box-shadow:0 18px 50px rgba(0,0,0,.2);
+      font-size:12px;
+      transition:.25s ease;
+    }
+
+    .toast.show{
+      opacity:1;
+      transform:translate(-50%,0);
+    }
+
+    .modal{
+      position:fixed;
+      inset:0;
+      z-index:110;
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding:20px;
+      background:rgba(3,13,29,.58);
+      backdrop-filter:blur(5px);
+    }
+
+    .modal.show{
+      display:flex;
+    }
+
+    .modal__card{
+      width:min(520px,100%);
+      border-radius:22px;
+      background:#fff;
+      box-shadow:0 30px 80px rgba(0,0,0,.25);
+      padding:24px;
+      position:relative;
+    }
+
+    .modal__close{
+      position:absolute;
+      right:16px;
+      top:15px;
+      width:34px;
+      height:34px;
+      border-radius:10px;
+      border:1px solid var(--line);
+      background:#fff;
+      color:var(--ink);
+      display:grid;
+      place-items:center;
+    }
+
+    .modal__close svg{
+      width:17px;
+      height:17px;
+      stroke:currentColor;
+    }
+
+    .modal h3{
+      margin:0 42px 7px 0;
+      font-size:20px;
+    }
+
+    .modal p{
+      margin:0 0 18px;
+      font-size:11.5px;
+      line-height:1.65;
+      color:var(--muted);
+    }
+
+    .form{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+    }
+
+    .field{
+      display:grid;
+      gap:5px;
+    }
+
+    .field.full{
+      grid-column:1/-1;
+    }
+
+    .field label{
+      font-size:10.5px;
+      font-weight:800;
+      color:#48566a;
+    }
+
+    .field input,
+    .field select,
+    .field textarea{
+      width:100%;
+      border:1px solid #dce4ee;
+      border-radius:10px;
+      padding:11px 12px;
+      outline:none;
+      background:#fbfcfe;
+      font-size:12px;
+    }
+
+    .field textarea{
+      min-height:90px;
+      resize:vertical;
+    }
+
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus{
+      border-color:#82a7ea;
+      box-shadow:0 0 0 3px rgba(20,88,212,.08);
+      background:#fff;
+    }
+
+    .modal__actions{
+      display:flex;
+      gap:8px;
+      justify-content:flex-end;
+      margin-top:14px;
+    }
+
+    .btn--dark{
+      background:var(--navy);
+      color:#fff;
+    }
+
+    .btn--soft{
+      background:#eef3f8;
+      color:#536174;
+    }
+
+    .modal__notice{
+      margin-top:9px;
+      font-size:9.5px;
+      color:#9aa5b3;
+    }
+
+    /* =========================
+       REVEAL
+    ========================== */
+
+    [data-reveal]{
+      opacity:0;
+      transform:translateY(18px);
+      transition:
+        opacity .6s ease,
+        transform .6s ease;
+    }
+
+    [data-reveal].revealed{
+      opacity:1;
+      transform:none;
+    }
+
+    /* =========================
+       RESPONSIVE
+    ========================== */
+
+    @media (max-width:1280px){
+      :root{
+        --side:225px;
+      }
+
+      .quick-grid{
+        grid-template-columns:repeat(4,1fr);
+      }
+
+      .courses{
+        grid-template-columns:repeat(2,1fr);
+      }
+
+      .hero-grid{
+        grid-template-columns:minmax(0,1fr) 285px;
+      }
+
+      .hero__body{
+        padding:32px;
+      }
+
+      .split{
+        grid-template-columns:1fr;
+      }
+    }
+
+    @media (max-width:900px){
+      .layout{
+        grid-template-columns:1fr;
+      }
+
+      .side{
+        position:fixed;
+        left:-280px;
+        top:0;
+        width:260px;
+        height:100vh;
+        transition:left .25s ease;
+        box-shadow:20px 0 60px rgba(0,0,0,.25);
+      }
+
+      body.menu-open .side{
+        left:0;
+      }
+
+      body.menu-open::after{
+        content:"";
+        position:fixed;
+        inset:0;
+        background:rgba(1,10,23,.48);
+        z-index:35;
+      }
+
+      .topbar{
+        height:70px;
+        padding:0 18px;
+      }
+
+      .mobile-brand{
+        display:flex;
+      }
+
+      .menu-btn{
+        display:block;
+        z-index:2;
+      }
+
+      .search-wrap{
+        max-width:none;
+      }
+
+      .search-hint{
+        display:none;
+      }
+
+      .topbar__right .icon-btn:nth-child(2),
+      .user__meta{
+        display:none;
+      }
+
+      .content{
+        padding:18px;
+      }
+
+      .hero-grid{
+        grid-template-columns:1fr;
+      }
+
+      .stats-panel{
+        display:grid;
+        grid-template-columns:repeat(2,1fr);
+        gap:10px;
+      }
+
+      .panel-head,
+      .stats-note,
+      .stats-link{
+        grid-column:1/-1;
+      }
+
+      .big-stat{
+        margin-bottom:0;
+      }
+
+      .stat-row{
+        border:1px solid #edf0f5;
+        border-radius:14px;
+        padding:13px;
+      }
+
+      .quick-grid{
+        grid-template-columns:repeat(4,1fr);
+      }
+
+      .steps{
+        grid-template-columns:repeat(3,1fr);
+        gap:18px 0;
+      }
+
+      .steps::before{
+        display:none;
+      }
+
+      .faq-grid{
+        grid-template-columns:1fr;
+      }
+    }
+
+    @media (max-width:620px){
+      .topbar{
+        gap:8px;
+        padding:0 12px;
+      }
+
+      .mobile-brand span{
+        display:none;
+      }
+
+      .topbar__right{
+        gap:5px;
+      }
+
+      .icon-btn{
+        width:38px;
+        height:38px;
+      }
+
+      .user{
+        display:none;
+      }
+
+      .content{
+        padding:13px;
+      }
+
+      .hero{
+        min-height:430px;
+        border-radius:18px;
+      }
+
+      .hero::before{
+        background:
+          linear-gradient(
+            180deg,
+            rgba(4,20,46,.91),
+            rgba(4,20,46,.93)
+          ),
+          url("https://www.xn--9y2bn2f98hf9a9tn26e.kr/_files/6ylwJoaus.png")
+          center/cover no-repeat;
+      }
+
+      .hero__body{
+        padding:27px 22px;
+        justify-content:flex-end;
+      }
+
+      .hero h1{
+        font-size:34px;
+      }
+
+      .hero__lead{
+        font-size:13px;
+      }
+
+      .hero-wave{
+        width:100%;
+        right:-90px;
+        top:40px;
+        bottom:auto;
+        opacity:.45;
+      }
+
+      .stats-panel{
+        grid-template-columns:1fr 1fr;
+        padding:16px;
+        border-radius:18px;
+      }
+
+      .quick-grid{
+        grid-template-columns:repeat(2,1fr);
+      }
+
+      .quick{
+        min-height:108px;
+      }
+
+      .section{
+        padding:16px;
+        border-radius:18px;
+      }
+
+      .section-head{
+        align-items:flex-start;
+      }
+
+      .section-head__text h2{
+        font-size:18px;
+      }
+
+      .courses{
+        grid-template-columns:1fr;
+      }
+
+      .course__thumb{
+        height:168px;
+      }
+
+      .roadmap,
+      .news-panel{
+        padding:16px;
+        border-radius:18px;
+      }
+
+      .steps{
+        grid-template-columns:repeat(2,1fr);
+      }
+
+      .brand-story{
+        border-radius:18px;
+      }
+
+      .brand-story__body{
+        padding:28px 22px;
+      }
+
+      .brand-story h2{
+        font-size:25px;
+      }
+
+      .cta{
+        padding:24px 20px;
+        align-items:flex-start;
+        flex-direction:column;
+      }
+
+      .cta__actions{
+        justify-content:flex-start;
+      }
+
+      .footer{
+        flex-direction:column;
+        align-items:flex-start;
+      }
+
+      .form{
+        grid-template-columns:1fr;
+      }
+
+      .field.full{
+        grid-column:auto;
+      }
+    }
+  </style>
 </head>
+
 <body>
+
   <div class="layout">
-    <aside class="side">
-      <a href="#" class="side__brand">
-        <span class="brand-mark"></span>
-        코드월드
+
+    <!-- =========================
+         SIDEBAR
+    ========================== -->
+    <aside class="side" id="sideNav" aria-label="주요 메뉴">
+
+      <a href="#home" class="side__brand" aria-label="웨이브히어링 홈">
+
+        <img
+          src="https://www.xn--9y2bn2f98hf9a9tn26e.kr/_files/6qEt8HcEk.png"
+          alt="WAVE HEARING HEARING AID CENTER GROUP"
+          onerror="
+            this.style.display='none';
+            document.getElementById('brandFallback').style.display='flex'
+          "
+        />
+
+        <span class="brand-fallback" id="brandFallback">
+
+          <svg
+            class="wave-icon"
+            viewBox="0 0 64 64"
+            fill="none"
+            aria-hidden="true"
+          >
+            <path
+              d="M6 36c9-16 17-16 26 0s17 16 26 0"
+              stroke="#2ad2c3"
+              stroke-width="7"
+              stroke-linecap="round"
+            />
+            <path
+              d="M6 25c9-16 17-16 26 0s17 16 26 0"
+              stroke="#3f83f8"
+              stroke-width="7"
+              stroke-linecap="round"
+            />
+          </svg>
+
+          WAVE HEARING
+
+        </span>
       </a>
-      <nav class="side__nav">
-        <a href="#" class="side__item is-active">📚 모든 강좌</a>
-        <a href="#" class="side__item">🔥 인기 강좌</a>
-        <a href="#" class="side__item">🆕 신규 강좌</a>
-        <a href="#" class="side__item">⭐ 내 강좌</a>
-        <a href="#" class="side__item">💬 커뮤니티</a>
-        <a href="#" class="side__item">⚙ 설정</a>
-      </nav>
-      <div class="side__cats">
-        <h4>카테고리</h4>
-        <a href="#" class="cat">웹 개발 <span>42</span></a>
-        <a href="#" class="cat">데이터 분석 <span>18</span></a>
-        <a href="#" class="cat">AI / 머신러닝 <span>24</span></a>
-        <a href="#" class="cat">디자인 <span>13</span></a>
-        <a href="#" class="cat">모바일 앱 <span>9</span></a>
+
+      <div class="side__label">
+        Education Hub
       </div>
+
+      <nav class="side__nav">
+
+        <a href="#home" class="side__item is-active">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M3 10.5 12 3l9 7.5v9a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 19.5v-9Z"/>
+            <path d="M9 21v-7h6v7"/>
+          </svg>
+          홈
+        </a>
+
+        <a href="#courses" class="side__item">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="m3 6 9-3 9 3-9 3-9-3Z"/>
+            <path d="M6 8v6c0 2 3 4 6 4s6-2 6-4V8"/>
+            <path d="M21 7v7"/>
+          </svg>
+          교육과정
+        </a>
+
+        <a href="#quick" class="side__item">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M4 4h16v16H4z"/>
+            <path d="M8 8h8M8 12h8M8 16h5"/>
+          </svg>
+          실무센터
+        </a>
+
+        <a href="#quick" class="side__item">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M8 10a4 4 0 1 1 8 0c0 3-4 3-4 6"/>
+            <path d="M12 20h.01"/>
+          </svg>
+          문제해결
+        </a>
+
+        <a href="#roadmap" class="side__item">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M5 4h14v16H5z"/>
+            <path d="M8 8h8M8 12h8M8 16h5"/>
+          </svg>
+          케이스 스터디
+        </a>
+
+        <a href="#courses" class="side__item">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M7 3h10v5H7z"/>
+            <path d="M5 8h14v13H5z"/>
+            <path d="M9 12h6M9 16h6"/>
+          </svg>
+          제품·기술
+        </a>
+
+        <a href="#faq" class="side__item">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M4 5h16v14H4z"/>
+            <path d="M8 9h8M8 13h6"/>
+          </svg>
+          자료실
+        </a>
+
+      </nav>
+
+      <div class="side__divider"></div>
+
+      <div class="side__label">
+        Audience
+      </div>
+
+      <nav class="side__nav">
+
+        <a
+          href="#courses"
+          class="side__item"
+          data-jump-tab="staff"
+        >
+          <svg viewBox="0 0 24 24" fill="none">
+            <circle cx="12" cy="8" r="4"/>
+            <path d="M4 21c0-4.2 3.3-7 8-7s8 2.8 8 7"/>
+          </svg>
+          임직원 교육
+        </a>
+
+        <a
+          href="#courses"
+          class="side__item"
+          data-jump-tab="owner"
+        >
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M4 10h16l-2-6H6l-2 6Z"/>
+            <path d="M6 10v10h12V10M9 20v-6h6v6"/>
+          </svg>
+          점주·파트너 교육
+        </a>
+
+        <a href="#story" class="side__item">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M12 21s7-3.5 7-10V5l-7-2-7 2v6c0 6.5 7 10 7 10Z"/>
+            <path d="m9.5 12 1.8 1.8 3.5-4"/>
+          </svg>
+          브랜드·회사소개
+        </a>
+
+      </nav>
+
+      <div class="side__mini">
+        <strong>
+          현장에서 바로 쓰는<br>
+          웨이브히어링 실무 교육
+        </strong>
+
+        <p>
+          제품 지식부터 상담, 피팅,
+          매장 운영까지 한 흐름으로 학습합니다.
+        </p>
+
+        <a href="#courses">
+          교육과정 보기
+          <span>→</span>
+        </a>
+      </div>
+
     </aside>
 
+
+    <!-- =========================
+         MAIN
+    ========================== -->
+
     <main class="main">
+
+      <!-- TOP BAR -->
       <header class="topbar">
-        <input class="search" type="search" placeholder="강좌, 강사, 키워드 검색…" />
+
+        <button
+          class="menu-btn"
+          id="menuBtn"
+          aria-label="메뉴 열기"
+        >
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+          >
+            <path d="M4 7h16M4 12h16M4 17h16"/>
+          </svg>
+        </button>
+
+
+        <a
+          href="#home"
+          class="mobile-brand"
+          aria-label="웨이브히어링 홈"
+        >
+          <svg viewBox="0 0 64 64" fill="none">
+            <path
+              d="M6 36c9-16 17-16 26 0s17 16 26 0"
+              stroke="#0d5f4b"
+              stroke-width="7"
+              stroke-linecap="round"
+            />
+            <path
+              d="M6 25c9-16 17-16 26 0s17 16 26 0"
+              stroke="#1458d4"
+              stroke-width="7"
+              stroke-linecap="round"
+            />
+          </svg>
+
+          <span>웨이브히어링</span>
+        </a>
+
+
+        <div class="search-wrap">
+
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke-width="1.8"
+          >
+            <circle cx="11" cy="11" r="7"/>
+            <path d="m20 20-4-4"/>
+          </svg>
+
+          <label
+            class="sr-only"
+            for="siteSearch"
+          >
+            교육 콘텐츠 검색
+          </label>
+
+          <input
+            class="search"
+            id="siteSearch"
+            type="search"
+            placeholder="무엇을 찾고 계신가요? 예: 피팅, REM, 상담, 매장운영"
+          />
+
+          <span class="search-hint">
+            Enter
+          </span>
+
+        </div>
+
+
         <div class="topbar__right">
-          <button class="icon-btn" aria-label="알림">🔔</button>
+
+          <button
+            class="icon-btn"
+            aria-label="교육 문의"
+            data-open-modal="contact"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke-width="1.7"
+            >
+              <path d="M5 18h10l4 3v-3a3 3 0 0 0 2-3V7a3 3 0 0 0-3-3H6a3 3 0 0 0-3 3v8a3 3 0 0 0 2 3Z"/>
+              <path d="M8 10h8M8 14h5"/>
+            </svg>
+          </button>
+
+          <button
+            class="icon-btn"
+            aria-label="관심 교육 저장"
+            id="saveBtn"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke-width="1.7"
+            >
+              <path d="M6 3h12v18l-6-4-6 4V3Z"/>
+            </svg>
+          </button>
+
           <div class="user">
-            <div class="user__avatar">홍</div>
-            <span>홍길동</span>
+
+            <div class="user__avatar">
+              WH
+            </div>
+
+            <div class="user__meta">
+              <strong>WAVE HEARING</strong>
+              <span>Education & Growth</span>
+            </div>
+
           </div>
         </div>
+
       </header>
 
-      <section class="banner">
-        <div class="banner__text">
-          <p class="banner__tag">신규 강좌 출시</p>
-          <h1>실전 React + TypeScript 마스터</h1>
-          <p>실제 프로덕션 패턴과 모범 사례를 한 번에. 4주 과정으로 빠르게 끝내세요.</p>
-          <button class="btn btn--primary">강좌 보러가기 →</button>
-        </div>
-        <div class="banner__art"></div>
-      </section>
 
-      <section class="block">
-        <div class="block__head">
-          <h2>지금 인기 있는 강좌</h2>
-          <a href="#" class="link">전체 보기 →</a>
-        </div>
-        <div class="courses">
-          <article class="course">
-            <div class="course__thumb"><img src="course-1-js.svg" alt="모던 자바스크립트" loading="lazy"/></div>
-            <div class="course__body">
-              <span class="badge">웹 개발</span>
-              <h3>모던 자바스크립트 완전 정복</h3>
-              <p class="instructor">강사: 김지훈</p>
-              <div class="meta">
-                <span>⭐ 4.9</span><span>👥 2,341명</span><span>⏱ 12시간</span>
+      <div
+        class="content"
+        id="home"
+      >
+
+        <!-- =========================
+             HERO
+        ========================== -->
+        <section
+          class="hero-grid"
+          data-reveal
+        >
+
+          <div class="hero">
+
+            <div class="hero__body">
+
+              <div class="eyebrow">
+                보청기 전문가를 위한 실무 중심 교육 플랫폼
               </div>
-              <div class="price"><strong>₩39,000</strong><del>₩89,000</del></div>
-            </div>
-          </article>
 
-          <article class="course">
-            <div class="course__thumb"><img src="course-2-py.svg" alt="파이썬 데이터 분석" loading="lazy"/></div>
-            <div class="course__body">
-              <span class="badge">데이터 분석</span>
-              <h3>파이썬으로 시작하는 데이터 분석</h3>
-              <p class="instructor">강사: 이수민</p>
-              <div class="meta">
-                <span>⭐ 4.8</span><span>👥 1,820명</span><span>⏱ 18시간</span>
+              <h1>
+                듣는 가치를 높이는<br>
+                전문가의 선택,
+                <span class="accent">
+                  웨이브히어링
+                </span>
+              </h1>
+
+              <p class="hero__lead">
+                임직원과 점주·파트너가 같은 기준으로 배우고,
+                현장에서 바로 적용할 수 있도록 청각학 기초부터
+                제품, 피팅, REM, 상담, 사후관리,
+                센터 운영까지 실무 교육을 연결합니다.
+              </p>
+
+              <div class="hero__actions">
+
+                <a
+                  class="btn btn--primary"
+                  href="#courses"
+                >
+                  교육과정 둘러보기
+
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <path d="m9 18 6-6-6-6"/>
+                  </svg>
+                </a>
+
+                <button
+                  class="btn btn--ghost"
+                  data-open-modal="contact"
+                >
+                  교육·제휴 문의
+                </button>
+
               </div>
-              <div class="price"><strong>₩49,000</strong><del>₩99,000</del></div>
-            </div>
-          </article>
 
-          <article class="course">
-            <div class="course__thumb"><img src="course-3-ai.svg" alt="Claude API 실전" loading="lazy"/></div>
-            <div class="course__body">
-              <span class="badge">AI</span>
-              <h3>LLM 앱 만들기: Claude API 실전</h3>
-              <p class="instructor">강사: 박도윤</p>
-              <div class="meta">
-                <span>⭐ 4.9</span><span>👥 943명</span><span>⏱ 8시간</span>
+              <div class="hero__tags">
+                <span class="hero__tag"># 청각학 기초</span>
+                <span class="hero__tag"># 보청기 피팅</span>
+                <span class="hero__tag"># REM</span>
+                <span class="hero__tag"># 고객상담</span>
+                <span class="hero__tag"># 센터운영</span>
               </div>
-              <div class="price"><strong>₩59,000</strong><del>₩119,000</del></div>
-            </div>
-          </article>
 
-          <article class="course">
-            <div class="course__thumb"><img src="course-4-ui.svg" alt="Figma UI 디자인" loading="lazy"/></div>
-            <div class="course__body">
-              <span class="badge">디자인</span>
-              <h3>Figma로 배우는 UI 디자인 기초</h3>
-              <p class="instructor">강사: 한유진</p>
-              <div class="meta">
-                <span>⭐ 4.7</span><span>👥 1,205명</span><span>⏱ 10시간</span>
-              </div>
-              <div class="price"><strong>₩29,000</strong><del>₩69,000</del></div>
             </div>
-          </article>
-        </div>
-      </section>
 
-      <section class="block">
-        <div class="block__head">
-          <h2>내가 듣고 있는 강좌</h2>
-        </div>
-        <div class="progress-list">
-          <div class="progress-item">
-            <div class="progress-item__head">
-              <strong>실전 React + TypeScript 마스터</strong>
-              <span>8 / 24강</span>
-            </div>
-            <div class="bar"><div class="bar__fill" style="width: 33%"></div></div>
+
+            <svg
+              class="hero-wave"
+              viewBox="0 0 900 230"
+              fill="none"
+              aria-hidden="true"
+            >
+              <path
+                d="M0 130c75-115 130-115 200 0s125 115 200 0 130-115 200 0 125 115 300-8"
+                stroke="#1bd0c3"
+                stroke-width="3"
+                opacity=".8"
+              />
+
+              <path
+                d="M0 160c75-115 130-115 200 0s125 115 200 0 130-115 200 0 125 115 300-8"
+                stroke="#2682ff"
+                stroke-width="2"
+                opacity=".7"
+              />
+
+              <path
+                d="M0 190c75-115 130-115 200 0s125 115 200 0 130-115 200 0 125 115 300-8"
+                stroke="#6b87ff"
+                stroke-width="1.5"
+                opacity=".5"
+              />
+            </svg>
+
           </div>
-          <div class="progress-item">
-            <div class="progress-item__head">
-              <strong>모던 자바스크립트 완전 정복</strong>
-              <span>18 / 32강</span>
+
+
+          <!-- STATS -->
+          <aside
+            class="stats-panel"
+            aria-label="웨이브히어링 현황"
+          >
+
+            <div class="panel-head">
+              <h3>웨이브히어링 한눈에 보기</h3>
+              <small>공식 홈페이지 기준</small>
             </div>
-            <div class="bar"><div class="bar__fill" style="width: 56%"></div></div>
-          </div>
-          <div class="progress-item">
-            <div class="progress-item__head">
-              <strong>Figma로 배우는 UI 디자인 기초</strong>
-              <span>22 / 22강 · 완료</span>
+
+            <div class="big-stat">
+              <span>누적 방문 고객</span>
+
+              <strong>
+                30만
+                <em>명+</em>
+              </strong>
             </div>
-            <div class="bar"><div class="bar__fill bar__fill--done" style="width: 100%"></div></div>
+
+            <div class="stat-row">
+              <span>본사 직영 네트워크</span>
+              <strong>16개</strong>
+            </div>
+
+            <div class="stat-row">
+              <span>청각·보청기 전문가</span>
+              <strong>30명+</strong>
+            </div>
+
+            <div class="stat-row">
+              <span>
+                한 곳에서 비교 가능한 글로벌 브랜드
+              </span>
+              <strong>6대</strong>
+            </div>
+
+            <div class="stats-note">
+              ※ 숫자 정보는 웨이브히어링 공식 홈페이지의
+              공개 표기 내용을 기준으로 구성했습니다.
+            </div>
+
+            <a
+              class="stats-link"
+              href="https://www.xn--9y2bn2f98hf9a9tn26e.kr/"
+              target="_blank"
+              rel="noopener"
+            >
+              공식 홈페이지 방문
+              <span>↗</span>
+            </a>
+
+          </aside>
+
+        </section>
+
+
+        <!-- =========================
+             QUICK MENU
+        ========================== -->
+        <section
+          class="section"
+          id="quick"
+          data-reveal
+        >
+
+          <div class="section-head">
+
+            <div class="section-head__text">
+
+              <h2>
+                실무에서 바로 찾기
+              </h2>
+
+              <p>
+                현장에서 자주 마주치는 상황을 기준으로
+                핵심 교육을 빠르게 찾아보세요.
+              </p>
+
+            </div>
+
           </div>
+
+
+          <div
+            class="quick-grid"
+            id="quickGrid"
+          >
+
+            <a
+              class="quick"
+              href="#courses"
+              data-keywords="소리 큼 볼륨 이득 gain 피팅"
+            >
+
+              <span class="quick__icon">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                >
+                  <path d="M4 10h4l5-4v12l-5-4H4z"/>
+                  <path d="M17 9a4 4 0 0 1 0 6M19 6a8 8 0 0 1 0 12"/>
+                </svg>
+              </span>
+
+              <strong>
+                소리가 너무 커요
+              </strong>
+
+              <small>
+                Gain · 압축 조절
+              </small>
+
+            </a>
+
+
+            <a
+              class="quick"
+              href="#courses"
+              data-keywords="말소리 어음 명료도 speech"
+            >
+
+              <span class="quick__icon">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                >
+                  <path d="M4 5h16v11H9l-5 4V5Z"/>
+                  <path d="M8 9h8M8 12h5"/>
+                </svg>
+              </span>
+
+              <strong>
+                말소리가 잘 안 들려요
+              </strong>
+
+              <small>
+                명료도 · 상담
+              </small>
+
+            </a>
+
+
+            <a
+              class="quick"
+              href="#courses"
+              data-keywords="울림 폐쇄감 occlusion 피팅"
+            >
+
+              <span class="quick__icon">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                >
+                  <path d="M12 4a7 7 0 0 0-7 7v3a3 3 0 0 0 3 3h1v-6H6"/>
+                  <path d="M12 4a7 7 0 0 1 7 7v3a3 3 0 0 1-3 3h-1v-6h3"/>
+                  <path d="M12 18v2"/>
+                </svg>
+              </span>
+
+              <strong>
+                제 목소리가 울려요
+              </strong>
+
+              <small>
+                폐쇄감 해결
+              </small>
+
+            </a>
+
+
+            <a
+              class="quick"
+              href="#courses"
+              data-keywords="피드백 삐 소리 feedback"
+            >
+
+              <span class="quick__icon">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                >
+                  <path d="M7 17c-3-4-3-8 0-12M11 15c-2-2.5-2-5.5 0-8M15 13c-1-1-1-3 0-4"/>
+                  <path d="m18 8 3 4-3 4"/>
+                </svg>
+              </span>
+
+              <strong>
+                삐~ 소리가 나요
+              </strong>
+
+              <small>
+                피드백 제어
+              </small>
+
+            </a>
+
+
+            <a
+              class="quick"
+              href="#courses"
+              data-keywords="소리 작음 출력 볼륨"
+            >
+
+              <span class="quick__icon">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                >
+                  <path d="M4 10h4l5-4v12l-5-4H4z"/>
+                  <path d="M17 11v2"/>
+                </svg>
+              </span>
+
+              <strong>
+                소리가 너무 작아요
+              </strong>
+
+              <small>
+                출력 · 목표이득
+              </small>
+
+            </a>
+
+
+            <a
+              class="quick"
+              href="#courses"
+              data-keywords="소음 환경 대화 방향성 마이크"
+            >
+
+              <span class="quick__icon">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                >
+                  <circle cx="8" cy="9" r="3"/>
+                  <circle cx="16" cy="9" r="3"/>
+                  <path d="M3 20c0-4 2-6 5-6s5 2 5 6M11 20c0-4 2-6 5-6s5 2 5 6"/>
+                </svg>
+              </span>
+
+              <strong>
+                소음 속 대화가 어려워요
+              </strong>
+
+              <small>
+                방향성 · 소음관리
+              </small>
+
+            </a>
+
+
+            <a
+              class="quick"
+              href="#courses"
+              data-keywords="블루투스 연결 앱 스마트폰"
+            >
+
+              <span class="quick__icon">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                >
+                  <path d="m8 7 8 10V7L8 17l8-10"/>
+                  <path d="M5 6l12 12M5 18 17 6"/>
+                </svg>
+              </span>
+
+              <strong>
+                연결이 안 돼요
+              </strong>
+
+              <small>
+                앱 · 블루투스
+              </small>
+
+            </a>
+
+
+            <a
+              class="quick"
+              href="#courses"
+              data-keywords="관리 청소 배터리 습기 사후관리"
+            >
+
+              <span class="quick__icon">
+
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                >
+                  <circle cx="12" cy="12" r="3"/>
+
+                  <path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1-2.8 2.8-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.6v.2h-4V21a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1L4.2 17l.1-.1a1.7 1.7 0 0 0 .3-1.9A1.7 1.7 0 0 0 3 14H2.8v-4H3a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9L4.2 7 7 4.2l.1.1a1.7 1.7 0 0 0 1.9.3A1.7 1.7 0 0 0 10 3v-.2h4V3a1.7 1.7 0 0 0 1 1.6 1.7 1.7 0 0 0 1.9-.3l.1-.1L19.8 7l-.1.1a1.7 1.7 0 0 0-.3 1.9 1.7 1.7 0 0 0 1.6 1h.2v4H21a1.7 1.7 0 0 0-1.6 1Z"/>
+                </svg>
+
+              </span>
+
+              <strong>
+                보청기 관리 방법
+              </strong>
+
+              <small>
+                청소 · 점검
+              </small>
+
+            </a>
+
+          </div>
+        </section>
+
+
+        <!-- =========================
+             COURSES
+        ========================== -->
+        <section
+          class="section"
+          id="courses"
+          data-reveal
+        >
+
+          <div class="section-head">
+
+            <div class="section-head__text">
+
+              <h2>
+                추천 교육과정
+              </h2>
+
+              <p>
+                직무와 운영 역할에 맞춰 필요한
+                콘텐츠를 선택할 수 있습니다.
+              </p>
+
+            </div>
+
+            <a
+              class="link"
+              href="#roadmap"
+            >
+              학습 로드맵 보기 →
+            </a>
+
+          </div>
+
+
+          <div class="course-toolbar">
+
+            <div
+              class="tabs"
+              role="tablist"
+              aria-label="교육 대상 선택"
+            >
+
+              <button
+                class="tab is-active"
+                data-tab="all"
+                role="tab"
+              >
+                전체
+              </button>
+
+              <button
+                class="tab"
+                data-tab="staff"
+                role="tab"
+              >
+                임직원
+              </button>
+
+              <button
+                class="tab"
+                data-tab="owner"
+                role="tab"
+              >
+                점주·파트너
+              </button>
+
+            </div>
+
+            <span
+              class="course-count"
+              id="courseCount"
+            >
+              8개 교육과정
+            </span>
+
+          </div>
+
+
+          <div
+            class="courses"
+            id="courseGrid"
+          >
+
+            <!-- 1 -->
+            <article
+              class="course"
+              data-audience="staff"
+              data-keywords="청각학 난청 청력검사 기초 임직원"
+            >
+
+              <div class="course__thumb photo-b">
+
+                <span class="course__type">
+                  입문 · 직원
+                </span>
+
+                <span class="course__play">
+                  <svg viewBox="0 0 24 24">
+                    <path d="m9 7 8 5-8 5V7Z"/>
+                  </svg>
+                </span>
+
+              </div>
+
+              <div class="course__body">
+
+                <span class="badge">
+                  청각 기초
+                </span>
+
+                <h3>
+                  난청 유형과 청력검사 결과 이해
+                </h3>
+
+                <p>
+                  순음청력검사, 어음검사, 청력도 해석을
+                  고객 설명까지 연결하는 기본 과정입니다.
+                </p>
+
+                <div class="meta">
+
+                  <span>
+                    <svg viewBox="0 0 24 24" fill="none">
+                      <circle cx="12" cy="12" r="9"/>
+                      <path d="M12 7v5l3 2"/>
+                    </svg>
+                    45분
+                  </span>
+
+                  <span>기초</span>
+                  <span>실무 체크</span>
+
+                </div>
+              </div>
+
+            </article>
+
+
+            <!-- 2 -->
+            <article
+              class="course"
+              data-audience="staff"
+              data-keywords="제품 브랜드 비교 보청기 선택 임직원"
+            >
+
+              <div class="course__thumb photo-a">
+
+                <span class="course__type">
+                  제품 · 직원
+                </span>
+
+                <span class="course__play">
+                  <svg viewBox="0 0 24 24">
+                    <path d="m9 7 8 5-8 5V7Z"/>
+                  </svg>
+                </span>
+
+              </div>
+
+              <div class="course__body">
+
+                <span class="badge">
+                  제품·기술
+                </span>
+
+                <h3>
+                  보청기 브랜드·제품 비교와 선택 기준
+                </h3>
+
+                <p>
+                  청력, 생활환경, 사용 목적을 바탕으로
+                  고객에게 맞는 제품을 설명하고 제안하는
+                  방법을 다룹니다.
+                </p>
+
+                <div class="meta">
+
+                  <span>
+                    <svg viewBox="0 0 24 24" fill="none">
+                      <circle cx="12" cy="12" r="9"/>
+                      <path d="M12 7v5l3 2"/>
+                    </svg>
+                    60분
+                  </span>
+
+                  <span>중급</span>
+                  <span>Case</span>
+
+                </div>
+              </div>
+
+            </article>
+
+
+            <!-- 3 -->
+            <article
+              class="course"
+              data-audience="staff"
+              data-keywords="피팅 gain compression 압축 조절 REM 실이측정 임직원"
+            >
+
+              <div class="course__thumb photo-c">
+
+                <span class="course__type">
+                  실습 · 직원
+                </span>
+
+                <span class="course__play">
+                  <svg viewBox="0 0 24 24">
+                    <path d="m9 7 8 5-8 5V7Z"/>
+                  </svg>
+                </span>
+
+              </div>
+
+              <div class="course__body">
+
+                <span class="badge">
+                  피팅 실무
+                </span>
+
+                <h3>
+                  피팅·Compression·REM 실무
+                </h3>
+
+                <p>
+                  초기 피팅부터 실이측정 기반 검증,
+                  불편 호소별 Fine Tuning까지
+                  단계별로 연습합니다.
+                </p>
+
+                <div class="meta">
+
+                  <span>
+                    <svg viewBox="0 0 24 24" fill="none">
+                      <circle cx="12" cy="12" r="9"/>
+                      <path d="M12 7v5l3 2"/>
+                    </svg>
+                    90분
+                  </span>
+
+                  <span>심화</span>
+                  <span>Hands-on</span>
+
+                </div>
+              </div>
+
+            </article>
+
+
+            <!-- 4 -->
+            <article
+              class="course"
+              data-audience="staff"
+              data-keywords="상담 고객 니즈 커뮤니케이션 클레임 임직원"
+            >
+
+              <div class="course__thumb photo-d">
+
+                <span class="course__type">
+                  상담 · 직원
+                </span>
+
+                <span class="course__play">
+                  <svg viewBox="0 0 24 24">
+                    <path d="m9 7 8 5-8 5V7Z"/>
+                  </svg>
+                </span>
+
+              </div>
+
+              <div class="course__body">
+
+                <span class="badge">
+                  상담 실무
+                </span>
+
+                <h3>
+                  고객 니즈 분석과 설명·상담 시나리오
+                </h3>
+
+                <p>
+                  고객의 불편을 정확히 파악하고
+                  전문성을 유지하면서 이해하기 쉽게
+                  설명하는 상담 구조를 익힙니다.
+                </p>
+
+                <div class="meta">
+
+                  <span>
+                    <svg viewBox="0 0 24 24" fill="none">
+                      <circle cx="12" cy="12" r="9"/>
+                      <path d="M12 7v5l3 2"/>
+                    </svg>
+                    50분
+                  </span>
+
+                  <span>중급</span>
+                  <span>Role-play</span>
+
+                </div>
+              </div>
+
+            </article>
+
+
+            <!-- 5 -->
+            <article
+              class="course"
+              data-audience="owner"
+              data-keywords="점주 센터 운영 표준 프로세스 매장 운영"
+            >
+
+              <div class="course__thumb photo-a">
+
+                <span class="course__type">
+                  운영 · 점주
+                </span>
+
+                <span class="course__play">
+                  <svg viewBox="0 0 24 24">
+                    <path d="m9 7 8 5-8 5V7Z"/>
+                  </svg>
+                </span>
+
+              </div>
+
+              <div class="course__body">
+
+                <span class="badge">
+                  센터 운영
+                </span>
+
+                <h3>
+                  고객 접점 중심 센터 운영 표준 프로세스
+                </h3>
+
+                <p>
+                  예약·내방·검사·상담·피팅·교육·사후관리까지
+                  고객 여정을 기준으로 운영 품질을 표준화합니다.
+                </p>
+
+                <div class="meta">
+
+                  <span>
+                    <svg viewBox="0 0 24 24" fill="none">
+                      <circle cx="12" cy="12" r="9"/>
+                      <path d="M12 7v5l3 2"/>
+                    </svg>
+                    60분
+                  </span>
+
+                  <span>점주</span>
+                  <span>SOP</span>
+
+                </div>
+              </div>
+
+            </article>
+
+
+            <!-- 6 -->
+            <article
+              class="course"
+              data-audience="owner"
+              data-keywords="매출 KPI 상담 전환 재방문 고객관리 점주"
+            >
+
+              <div class="course__thumb photo-b">
+
+                <span class="course__type">
+                  경영 · 점주
+                </span>
+
+                <span class="course__play">
+                  <svg viewBox="0 0 24 24">
+                    <path d="m9 7 8 5-8 5V7Z"/>
+                  </svg>
+                </span>
+
+              </div>
+
+              <div class="course__body">
+
+                <span class="badge">
+                  경영 관리
+                </span>
+
+                <h3>
+                  센터 KPI와 고객관리 운영
+                </h3>
+
+                <p>
+                  상담 전환, 재방문, 사후관리 활동을
+                  일관된 지표로 관리해 서비스와 운영 효율을
+                  함께 높입니다.
+                </p>
+
+                <div class="meta">
+
+                  <span>
+                    <svg viewBox="0 0 24 24" fill="none">
+                      <circle cx="12" cy="12" r="9"/>
+                      <path d="M12 7v5l3 2"/>
+                    </svg>
+                    45분
+                  </span>
+
+                  <span>점주</span>
+                  <span>KPI</span>
+
+                </div>
+              </div>
+
+            </article>
+
+
+            <!-- 7 -->
+            <article
+              class="course"
+              data-audience="owner"
+              data-keywords="지역 마케팅 리뷰 네이버 고객 유입 점주"
+            >
+
+              <div class="course__thumb photo-c">
+
+                <span class="course__type">
+                  마케팅 · 점주
+                </span>
+
+                <span class="course__play">
+                  <svg viewBox="0 0 24 24">
+                    <path d="m9 7 8 5-8 5V7Z"/>
+                  </svg>
+                </span>
+
+              </div>
+
+              <div class="course__body">
+
+                <span class="badge">
+                  지역 마케팅
+                </span>
+
+                <h3>
+                  지역 고객 유입과 신뢰 콘텐츠 운영
+                </h3>
+
+                <p>
+                  지역 검색, 후기, 상담 콘텐츠를 기반으로
+                  과장 없이 신뢰를 쌓는 센터 단위
+                  마케팅 원칙을 학습합니다.
+                </p>
+
+                <div class="meta">
+
+                  <span>
+                    <svg viewBox="0 0 24 24" fill="none">
+                      <circle cx="12" cy="12" r="9"/>
+                      <path d="M12 7v5l3 2"/>
+                    </svg>
+                    40분
+                  </span>
+
+                  <span>점주</span>
+                  <span>Local</span>
+
+                </div>
+              </div>
+
+            </article>
+
+
+            <!-- 8 -->
+            <article
+              class="course"
+              data-audience="owner"
+              data-keywords="직원 교육 코칭 평가 온보딩 점주 리더십"
+            >
+
+              <div class="course__thumb photo-d">
+
+                <span class="course__type">
+                  리더십 · 점주
+                </span>
+
+                <span class="course__play">
+                  <svg viewBox="0 0 24 24">
+                    <path d="m9 7 8 5-8 5V7Z"/>
+                  </svg>
+                </span>
+
+              </div>
+
+              <div class="course__body">
+
+                <span class="badge">
+                  조직 성장
+                </span>
+
+                <h3>
+                  신규 직원 온보딩과 현장 코칭
+                </h3>
+
+                <p>
+                  센터별 서비스 편차를 줄이기 위한
+                  초기 교육, 실무 체크리스트,
+                  코칭 피드백 구조를 제공합니다.
+                </p>
+
+                <div class="meta">
+
+                  <span>
+                    <svg viewBox="0 0 24 24" fill="none">
+                      <circle cx="12" cy="12" r="9"/>
+                      <path d="M12 7v5l3 2"/>
+                    </svg>
+                    50분
+                  </span>
+
+                  <span>점주</span>
+                  <span>Coaching</span>
+
+                </div>
+              </div>
+
+            </article>
+
+          </div>
+        </section>
+
+
+        <!-- =========================
+             ROADMAP + CONTENT
+        ========================== -->
+
+        <div
+          class="split"
+          id="roadmap"
+          data-reveal
+        >
+
+          <section class="roadmap">
+
+            <div class="section-head">
+
+              <div class="section-head__text">
+
+                <h2>
+                  현장 적용형 학습 로드맵
+                </h2>
+
+                <p>
+                  지식 습득보다 실제 상담·피팅·관리 역량으로
+                  연결되는 흐름을 설계합니다.
+                </p>
+
+              </div>
+            </div>
+
+
+            <div class="steps">
+
+              <div class="step">
+                <div class="step__num">01</div>
+                <strong>기초 이해</strong>
+                <small>청각·제품 기본</small>
+              </div>
+
+              <div class="step">
+                <div class="step__num">02</div>
+                <strong>실무 학습</strong>
+                <small>상담·검사·피팅</small>
+              </div>
+
+              <div class="step">
+                <div class="step__num">03</div>
+                <strong>Hands-on</strong>
+                <small>장비·케이스 실습</small>
+              </div>
+
+              <div class="step">
+                <div class="step__num">04</div>
+                <strong>현장 적용</strong>
+                <small>고객 상담 적용</small>
+              </div>
+
+              <div class="step">
+                <div class="step__num">05</div>
+                <strong>케이스 리뷰</strong>
+                <small>문제 원인 분석</small>
+              </div>
+
+              <div class="step">
+                <div class="step__num">06</div>
+                <strong>코칭·성장</strong>
+                <small>피드백·재학습</small>
+              </div>
+
+            </div>
+          </section>
+
+
+          <section class="news-panel">
+
+            <div class="section-head">
+
+              <div class="section-head__text">
+
+                <h2>
+                  추천 학습 콘텐츠
+                </h2>
+
+                <p>
+                  짧게 보고 바로 적용할 수 있는
+                  실무형 콘텐츠 예시입니다.
+                </p>
+
+              </div>
+            </div>
+
+
+            <div class="news-list">
+
+              <a
+                class="news"
+                href="#courses"
+              >
+
+                <div class="news__thumb">
+                  <img
+                    src="https://www.xn--9y2bn2f98hf9a9tn26e.kr/_files/6qEALkzBy.jpg"
+                    alt="웨이브히어링 센터"
+                    loading="lazy"
+                  />
+                </div>
+
+                <div class="news__body">
+                  <b>
+                    고객 상담의 첫 10분,
+                    무엇을 확인해야 할까?
+                  </b>
+                  <span>
+                    상담 실무 · 12분
+                  </span>
+                </div>
+
+                <span class="news__go">
+                  <svg viewBox="0 0 24 24">
+                    <path d="m9 7 8 5-8 5V7Z"/>
+                  </svg>
+                </span>
+
+              </a>
+
+
+              <a
+                class="news"
+                href="#courses"
+              >
+
+                <div class="news__thumb">
+                  <img
+                    src="https://www.xn--9y2bn2f98hf9a9tn26e.kr/_files/6ylwJoaus.png"
+                    alt="웨이브히어링 센터 내부"
+                    loading="lazy"
+                  />
+                </div>
+
+                <div class="news__body">
+                  <b>
+                    REM을 피팅 검증에 연결하는
+                    핵심 포인트
+                  </b>
+                  <span>
+                    피팅 심화 · 18분
+                  </span>
+                </div>
+
+                <span class="news__go">
+                  <svg viewBox="0 0 24 24">
+                    <path d="m9 7 8 5-8 5V7Z"/>
+                  </svg>
+                </span>
+
+              </a>
+
+
+              <a
+                class="news"
+                href="#courses"
+              >
+
+                <div class="news__thumb">
+                  <img
+                    src="https://www.xn--9y2bn2f98hf9a9tn26e.kr/_files/6qEALkwMR.jpg"
+                    alt="웨이브히어링 지점"
+                    loading="lazy"
+                  />
+                </div>
+
+                <div class="news__body">
+                  <b>
+                    센터 서비스 품질을 만드는
+                    사후관리 루틴
+                  </b>
+
+                  <span>
+                    운영 관리 · 15분
+                  </span>
+                </div>
+
+                <span class="news__go">
+                  <svg viewBox="0 0 24 24">
+                    <path d="m9 7 8 5-8 5V7Z"/>
+                  </svg>
+                </span>
+
+              </a>
+
+            </div>
+          </section>
+
         </div>
-      </section>
+
+
+        <!-- =========================
+             COMPANY
+        ========================== -->
+
+        <section
+          class="brand-story"
+          id="story"
+          data-reveal
+        >
+
+          <div class="brand-story__body">
+
+            <img
+              class="brand-story__brand"
+              src="https://www.xn--9y2bn2f98hf9a9tn26e.kr/_files/6qEt8HcEk.png"
+              alt="WAVE HEARING"
+              loading="lazy"
+            />
+
+            <div class="eyebrow">
+              HEARING AID CENTER GROUP
+            </div>
+
+            <h2>
+              보청기를 통해 세상과 소통할 수 있도록,<br>
+              웨이브히어링이 함께합니다.
+            </h2>
+
+            <p>
+              웨이브히어링은 보청기 비교·체험·상담·구입·사후관리를
+              한 흐름으로 연결하는 전문센터 그룹입니다.
+              교육 플랫폼은 고객 접점의 전문성과 서비스 일관성을
+              높이기 위해 임직원과 파트너가 함께 학습하고 성장하는
+              기반을 지향합니다.
+            </p>
+
+            <div class="brand-points">
+
+              <span class="brand-point">
+                전문가 중심 상담
+              </span>
+
+              <span class="brand-point">
+                다양한 브랜드 비교
+              </span>
+
+              <span class="brand-point">
+                전국 네트워크
+              </span>
+
+              <span class="brand-point">
+                지속적인 교육과 성장
+              </span>
+
+            </div>
+          </div>
+        </section>
+
+
+        <!-- =========================
+             FAQ
+        ========================== -->
+
+        <section
+          class="section"
+          id="faq"
+          data-reveal
+        >
+
+          <div class="section-head">
+
+            <div class="section-head__text">
+
+              <h2>
+                교육 플랫폼 FAQ
+              </h2>
+
+              <p>
+                사이트 운영 시 자주 안내하게 될
+                항목을 미리 구성했습니다.
+              </p>
+
+            </div>
+          </div>
+
+
+          <div class="faq-grid">
+
+            <div class="faq">
+
+              <button class="faq__q">
+                임직원과 점주 교육은 어떻게 구분되나요?
+
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke-width="2"
+                >
+                  <path d="m6 9 6 6 6-6"/>
+                </svg>
+              </button>
+
+              <div class="faq__a">
+                임직원 과정은 청각학·제품·상담·피팅 등
+                전문 실무 역량에, 점주·파트너 과정은
+                운영 표준화·고객관리·지역 마케팅·직원 코칭 등
+                센터 운영 역량에 초점을 둡니다.
+              </div>
+
+            </div>
+
+
+            <div class="faq">
+
+              <button class="faq__q">
+                교육 내용은 실제 현장 사례를 반영하나요?
+
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke-width="2"
+                >
+                  <path d="m6 9 6 6 6-6"/>
+                </svg>
+              </button>
+
+              <div class="faq__a">
+                케이스 스터디와 문제해결형 콘텐츠를 중심으로
+                구성할 수 있도록 설계했습니다.
+                실제 교육 운영 시에는 내부 승인된 사례와
+                표준 지침을 연결하는 방식이 적합합니다.
+              </div>
+
+            </div>
+
+
+            <div class="faq">
+
+              <button class="faq__q">
+                모바일에서도 사용할 수 있나요?
+
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke-width="2"
+                >
+                  <path d="m6 9 6 6 6-6"/>
+                </svg>
+              </button>
+
+              <div class="faq__a">
+                네. 현재 페이지는 PC, 태블릿,
+                스마트폰 화면에 맞춰 자동으로 재배치되는
+                반응형 구조로 제작되어 있습니다.
+              </div>
+
+            </div>
+
+
+            <div class="faq">
+
+              <button class="faq__q">
+                GitHub Pages에 index.html 하나만 올리면 되나요?
+
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke-width="2"
+                >
+                  <path d="m6 9 6 6 6-6"/>
+                </svg>
+              </button>
+
+              <div class="faq__a">
+                네. CSS와 JavaScript는 이 파일 안에 모두 포함되어 있으며,
+                사진과 로고는 외부 URL을 사용합니다.
+                따라서 저장소 루트에 index.html 하나만 올려도
+                페이지 구조가 동작합니다.
+              </div>
+
+            </div>
+
+          </div>
+        </section>
+
+
+        <!-- =========================
+             CTA
+        ========================== -->
+
+        <section
+          class="cta"
+          data-reveal
+        >
+
+          <div class="cta__text">
+
+            <h2>
+              웨이브히어링의 전문성을,
+              교육 경험으로 연결하세요.
+            </h2>
+
+            <p>
+              임직원 역량 강화부터 파트너 센터 운영 교육까지
+              하나의 브랜드 기준으로 확장할 수 있습니다.
+            </p>
+
+          </div>
+
+
+          <div class="cta__actions">
+
+            <button
+              class="btn btn--light"
+              data-open-modal="contact"
+            >
+              교육·제휴 문의
+            </button>
+
+            <a
+              class="btn btn--outline"
+              href="https://www.xn--9y2bn2f98hf9a9tn26e.kr/"
+              target="_blank"
+              rel="noopener"
+            >
+              공식 홈페이지
+            </a>
+
+          </div>
+
+        </section>
+
+
+        <!-- FOOTER -->
+        <footer class="footer">
+
+          <div>
+            <b>WAVE HEARING</b>
+            · 보청기 전문센터그룹
+            <br>
+            본 페이지는 웨이브히어링
+            교육·브랜드 홍보용 웹사이트입니다.
+          </div>
+
+          <div class="footer__links">
+            <a href="#home">홈</a>
+            <a href="#courses">교육과정</a>
+            <a href="#story">회사소개</a>
+            <a href="#faq">FAQ</a>
+          </div>
+
+        </footer>
+
+      </div>
+
     </main>
+
   </div>
-  <script src="script.js"></script>
-<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/v31edd6df95cf4e85bb4c19e7a9bdbcba1788362987495" integrity="sha512-iIg7k2xntmwu6/uSb5tpc/hySgZc4eoL31yB29W6tJFo2akwjPWcEqnCEdJvGexCL0KEQwVYv5BlowfhVz26hg==" data-cf-beacon='{"version":"2024.11.0","token":"c7ff09459b034bca86d316da146b68be","r":1,"spa":2}' crossorigin="anonymous"></script>
+
+
+  <!-- TOAST -->
+  <div
+    class="toast"
+    id="toast"
+    role="status"
+    aria-live="polite"
+  ></div>
+
+
+  <!-- =========================
+       CONTACT MODAL
+  ========================== -->
+
+  <div
+    class="modal"
+    id="contactModal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="contactTitle"
+  >
+
+    <div class="modal__card">
+
+      <button
+        class="modal__close"
+        data-close-modal
+        aria-label="닫기"
+      >
+
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke-width="2"
+        >
+          <path d="M6 6l12 12M18 6 6 18"/>
+        </svg>
+
+      </button>
+
+
+      <h3 id="contactTitle">
+        교육·제휴 문의
+      </h3>
+
+
+      <p>
+        아래 폼은 현재 웹 시안용입니다.
+        실제 접수 기능이 필요하면 이메일,
+        Google Form 또는 별도 백엔드와
+        연결해 사용할 수 있습니다.
+      </p>
+
+
+      <form
+        class="form"
+        id="contactForm"
+      >
+
+        <div class="field">
+
+          <label for="name">
+            이름
+          </label>
+
+          <input
+            id="name"
+            name="name"
+            placeholder="홍길동"
+            required
+          />
+
+        </div>
+
+
+        <div class="field">
+
+          <label for="role">
+            구분
+          </label>
+
+          <select
+            id="role"
+            name="role"
+          >
+            <option>임직원</option>
+            <option>점주·파트너</option>
+            <option>제휴 문의</option>
+            <option>기타</option>
+          </select>
+
+        </div>
+
+
+        <div class="field full">
+
+          <label for="email">
+            이메일 또는 연락처
+          </label>
+
+          <input
+            id="email"
+            name="email"
+            placeholder="example@company.com / 010-0000-0000"
+            required
+          />
+
+        </div>
+
+
+        <div class="field full">
+
+          <label for="message">
+            문의 내용
+          </label>
+
+          <textarea
+            id="message"
+            name="message"
+            placeholder="교육 또는 제휴 관련 문의 내용을 입력해주세요."
+          ></textarea>
+
+        </div>
+
+
+        <div class="modal__actions field full">
+
+          <button
+            type="button"
+            class="btn btn--soft"
+            data-close-modal
+          >
+            취소
+          </button>
+
+          <button
+            type="submit"
+            class="btn btn--dark"
+          >
+            문의 내용 확인
+          </button>
+
+        </div>
+
+      </form>
+
+
+      <div class="modal__notice">
+        ※ 현재 버전은 입력 내용을
+        외부로 전송하거나 저장하지 않습니다.
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- =========================
+       JAVASCRIPT
+  ========================== -->
+
+  <script>
+
+    (() => {
+
+      const body =
+        document.body;
+
+      const side =
+        document.getElementById('sideNav');
+
+      const menuBtn =
+        document.getElementById('menuBtn');
+
+      const toast =
+        document.getElementById('toast');
+
+      const search =
+        document.getElementById('siteSearch');
+
+      const tabs =
+        [...document.querySelectorAll('.tab')];
+
+      const courses =
+        [...document.querySelectorAll('.course')];
+
+      const count =
+        document.getElementById('courseCount');
+
+      const modal =
+        document.getElementById('contactModal');
+
+      let activeTab = 'all';
+
+
+      /* =========================
+         TOAST
+      ========================== */
+
+      const showToast = (message) => {
+
+        toast.textContent = message;
+
+        toast.classList.add('show');
+
+        clearTimeout(
+          window.__toastTimer
+        );
+
+        window.__toastTimer =
+          setTimeout(
+            () => toast.classList.remove('show'),
+            2200
+          );
+
+      };
+
+
+      /* =========================
+         MOBILE MENU
+      ========================== */
+
+      menuBtn?.addEventListener(
+        'click',
+        () => {
+          body.classList.toggle('menu-open');
+        }
+      );
+
+
+      side?.addEventListener(
+        'click',
+        (e) => {
+
+          if (
+            e.target.closest('a') &&
+            window.innerWidth <= 900
+          ) {
+            body.classList.remove('menu-open');
+          }
+
+        }
+      );
+
+
+      document.addEventListener(
+        'click',
+        (e) => {
+
+          if (
+            body.classList.contains('menu-open') &&
+            window.innerWidth <= 900 &&
+            !side.contains(e.target) &&
+            !menuBtn.contains(e.target)
+          ) {
+            body.classList.remove('menu-open');
+          }
+
+        }
+      );
+
+
+      /* =========================
+         SIDEBAR ACTIVE
+      ========================== */
+
+      document
+        .querySelectorAll('.side__item')
+        .forEach(item => {
+
+          item.addEventListener(
+            'click',
+            () => {
+
+              document
+                .querySelectorAll('.side__item')
+                .forEach(x => {
+                  x.classList.remove('is-active');
+                });
+
+              item.classList.add('is-active');
+
+            }
+          );
+
+        });
+
+
+      /* =========================
+         COURSE FILTER
+      ========================== */
+
+      const applyCourseFilter = () => {
+
+        const q =
+          search.value
+            .trim()
+            .toLowerCase();
+
+        let visible = 0;
+
+
+        courses.forEach(card => {
+
+          const audienceMatch =
+            activeTab === 'all' ||
+            card.dataset.audience === activeTab;
+
+
+          const text =
+            (
+              card.textContent +
+              ' ' +
+              (card.dataset.keywords || '')
+            ).toLowerCase();
+
+
+          const searchMatch =
+            !q ||
+            text.includes(q);
+
+
+          const show =
+            audienceMatch &&
+            searchMatch;
+
+
+          card.classList.toggle(
+            'hidden',
+            !show
+          );
+
+
+          if(show){
+            visible++;
+          }
+
+        });
+
+
+        count.textContent =
+          `${visible}개 교육과정`;
+
+      };
+
+
+      /* TAB */
+      tabs.forEach(tab => {
+
+        tab.addEventListener(
+          'click',
+          () => {
+
+            activeTab =
+              tab.dataset.tab;
+
+
+            tabs.forEach(x => {
+
+              x.classList.toggle(
+                'is-active',
+                x === tab
+              );
+
+            });
+
+
+            applyCourseFilter();
+
+          }
+        );
+
+      });
+
+
+      /* SIDEBAR AUDIENCE */
+
+      document
+        .querySelectorAll('[data-jump-tab]')
+        .forEach(link => {
+
+          link.addEventListener(
+            'click',
+            () => {
+
+              const target =
+                link.dataset.jumpTab;
+
+
+              const tab =
+                tabs.find(
+                  t => t.dataset.tab === target
+                );
+
+
+              if(tab){
+                tab.click();
+              }
+
+            }
+          );
+
+        });
+
+
+      /* SEARCH */
+
+      search.addEventListener(
+        'input',
+        applyCourseFilter
+      );
+
+
+      search.addEventListener(
+        'keydown',
+        (e) => {
+
+          if(e.key === 'Enter'){
+
+            e.preventDefault();
+
+
+            document
+              .getElementById('courses')
+              .scrollIntoView({
+                behavior:'smooth',
+                block:'start'
+              });
+
+
+            applyCourseFilter();
+
+
+            showToast(
+
+              search.value.trim()
+
+              ? `“${search.value.trim()}” 관련 교육을 찾았습니다.`
+
+              : '전체 교육과정을 표시합니다.'
+
+            );
+
+          }
+
+        }
+      );
+
+
+      /* =========================
+         QUICK SEARCH
+      ========================== */
+
+      document
+        .querySelectorAll('.quick')
+        .forEach(card => {
+
+          card.addEventListener(
+            'click',
+            () => {
+
+              const keyword =
+                (
+                  card.dataset.keywords || ''
+                )
+                .split(' ')[0];
+
+
+              search.value =
+                keyword;
+
+
+              activeTab =
+                'all';
+
+
+              tabs.forEach(t => {
+
+                t.classList.toggle(
+                  'is-active',
+                  t.dataset.tab === 'all'
+                );
+
+              });
+
+
+              setTimeout(
+                applyCourseFilter,
+                60
+              );
+
+            }
+          );
+
+        });
+
+
+      /* =========================
+         BOOKMARK DEMO
+      ========================== */
+
+      document
+        .getElementById('saveBtn')
+        ?.addEventListener(
+          'click',
+          () => {
+
+            showToast(
+              '관심 교육 저장 기능은 데모 상태입니다.'
+            );
+
+          }
+        );
+
+
+      /* =========================
+         FAQ
+      ========================== */
+
+      document
+        .querySelectorAll('.faq__q')
+        .forEach(btn => {
+
+          btn.addEventListener(
+            'click',
+            () => {
+
+              const item =
+                btn.closest('.faq');
+
+
+              document
+                .querySelectorAll('.faq')
+                .forEach(x => {
+
+                  if(x !== item){
+                    x.classList.remove('is-open');
+                  }
+
+                });
+
+
+              item.classList.toggle('is-open');
+
+            }
+          );
+
+        });
+
+
+      /* =========================
+         MODAL
+      ========================== */
+
+      const openModal = () => {
+
+        modal.classList.add('show');
+
+        setTimeout(
+          () => {
+            modal
+              .querySelector('input')
+              ?.focus();
+          },
+          80
+        );
+
+      };
+
+
+      const closeModal = () => {
+
+        modal.classList.remove('show');
+
+      };
+
+
+      document
+        .querySelectorAll(
+          '[data-open-modal="contact"]'
+        )
+        .forEach(btn => {
+
+          btn.addEventListener(
+            'click',
+            openModal
+          );
+
+        });
+
+
+      document
+        .querySelectorAll(
+          '[data-close-modal]'
+        )
+        .forEach(btn => {
+
+          btn.addEventListener(
+            'click',
+            closeModal
+          );
+
+        });
+
+
+      modal.addEventListener(
+        'click',
+        (e) => {
+
+          if(e.target === modal){
+            closeModal();
+          }
+
+        }
+      );
+
+
+      document.addEventListener(
+        'keydown',
+        (e) => {
+
+          if(e.key === 'Escape'){
+
+            closeModal();
+
+            body.classList.remove(
+              'menu-open'
+            );
+
+          }
+
+        }
+      );
+
+
+      document
+        .getElementById('contactForm')
+        .addEventListener(
+          'submit',
+          (e) => {
+
+            e.preventDefault();
+
+            closeModal();
+
+            showToast(
+              '데모 페이지입니다. 입력 내용은 전송되지 않았습니다.'
+            );
+
+          }
+        );
+
+
+      /* =========================
+         SCROLL ANIMATION
+      ========================== */
+
+      const io =
+        new IntersectionObserver(
+
+          (entries) => {
+
+            entries.forEach(entry => {
+
+              if(entry.isIntersecting){
+
+                entry.target
+                  .classList
+                  .add('revealed');
+
+
+                io.unobserve(
+                  entry.target
+                );
+
+              }
+
+            });
+
+          },
+
+          {
+            threshold:.08
+          }
+
+        );
+
+
+      document
+        .querySelectorAll('[data-reveal]')
+        .forEach(el => {
+
+          io.observe(el);
+
+        });
+
+
+    })();
+
+  </script>
+
 </body>
 </html>
